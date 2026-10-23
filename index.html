@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="vi" translate="no">
+<head>
+<meta charset="utf-8">
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a4f7a">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>越南旅遊1000句</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+:root {
+  --bg: #f3f5f8; --card: #ffffff; --fg: #1d2430; --muted: #66707f; --line: #d9dee6;
+  --ai: #2a4f7a; --ai-soft: #e7eef7; --shu: #b8372d; --chunk: #fbf3f2; --chunk-line: #e3b9b4;
+  --mod-bg: #e9f2f8; --mod-fg: #1c4a6b; --ok: #2f7a4f; --ok-soft: #e5f3ea;
+  --jp: "Noto Serif", Georgia, "Times New Roman", serif;
+  --zh: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
+  --fs: 17px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12161c; --card: #1a2029; --fg: #e4e8ee; --muted: #9aa4b2; --line: #2e3744;
+  --ai: #8fb4e0; --ai-soft: #22324a; --shu: #e8786d; --chunk: #2a1f20; --chunk-line: #6e3c38;
+  --mod-bg: #1b2c3b; --mod-fg: #b5d4ec; --ok: #7fcf9c; --ok-soft: #1d3326; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12161c; --card: #1a2029; --fg: #e4e8ee; --muted: #9aa4b2; --line: #2e3744;
+  --ai: #8fb4e0; --ai-soft: #22324a; --shu: #e8786d; --chunk: #2a1f20; --chunk-line: #6e3c38;
+  --mod-bg: #1b2c3b; --mod-fg: #b5d4ec; --ok: #7fcf9c; --ok-soft: #1d3326; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--fg); font-family: var(--zh); margin: 0; overflow: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--card); }
+.app { height: 100%; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); box-sizing: border-box; }
+header, .settings, .tabs, footer { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { background: var(--card); border-bottom: 1px solid var(--line); padding-block: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.back { color: var(--ai); text-decoration: none; font-size: 14px; white-space: nowrap; }
+h1 { font-family: var(--jp); font-size: 15px; font-weight: 600; color: var(--ai); margin: 0; white-space: nowrap; }
+.pick { display: flex; gap: 6px; margin-left: auto; align-items: center; min-width: 0; }
+#selS { max-width: 52vw; min-width: 0; }
+select, button { font: inherit; font-size: 14px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; }
+button { cursor: pointer; }
+button:disabled { opacity: .45; cursor: default; }
+button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid var(--ai); outline-offset: 1px; }
+.gear[aria-expanded="true"] { background: var(--ai); color: var(--card); border-color: var(--ai); }
+.tabs { background: var(--card); border-bottom: 1px solid var(--line); padding-block: 6px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 13px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; padding: 4px 10px; background: transparent; white-space: nowrap; }
+.seg button[aria-pressed="true"] { background: var(--ai); color: var(--card); }
+.stat { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.settings { background: var(--card); border-bottom: 1px solid var(--line); padding-block: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px 16px; font-size: 13px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 8px; white-space: nowrap; }
+main { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+.card { max-width: 760px; margin: 0 auto; padding-block: 18px 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 14px; font-size: var(--fs); box-sizing: border-box; }
+.ref { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.ref b { font-family: var(--jp); color: var(--shu); font-size: 1.4em; font-variant-numeric: tabular-nums; }
+.ref span { color: var(--muted); font-size: .75em; letter-spacing: .03em; }
+.badge { font-size: .7em; background: var(--ai-soft); color: var(--ai); border-radius: 999px; padding: 2px 9px; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.tr { font-weight: 700; line-height: 1.7; margin: 0; }
+.prompt { font-size: 1.1em; }
+.hint { color: var(--muted); font-size: .8em; margin: 0; }
+.orig { font-family: var(--jp); font-size: 1.2em; line-height: 1.8; margin: 0; }
+.mod { font-family: var(--jp); color: var(--mod-fg); padding: 6px 10px; line-height: 1.8; margin: 0; }
+.lbl { font-family: var(--zh); font-size: .68em; font-weight: 500; background: var(--mod-fg); color: var(--mod-bg); border-radius: 3px; padding: 1px 6px; margin-right: 8px; letter-spacing: .05em; }
+.chunks { display: flex; flex-wrap: wrap; gap: 12px 5px; padding-block: 12px; border-block: 1px dashed var(--line); }
+.ck { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.ck .j { font-family: var(--jp); background: var(--chunk); border: 1px solid var(--chunk-line); border-radius: 5px; padding: 2px 6px; line-height: 1.7; }
+.ck .h { font-size: .74em; color: var(--shu); line-height: 1.3; max-width: 8em; text-align: center; }
+.ck svg { width: 9px; height: 12px; color: var(--muted); }
+.ck .z { font-size: .72em; color: var(--muted); line-height: 1.3; max-width: 7em; text-align: center; }
+.vocab { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: .86em; line-height: 1.6; }
+.vocab li { padding-left: 1em; text-indent: -1em; }
+.vocab .w { font-family: var(--jp); color: var(--shu); font-weight: 600; }
+.note { display: flex; gap: 8px; align-items: flex-start; font-size: .86em; line-height: 1.7; background: var(--ai-soft); border-radius: 6px; padding: 8px 10px; }
+.note .tag { background: var(--ai); color: var(--card); border-radius: 3px; padding: 0 6px; font-size: .85em; flex: none; margin-top: .2em; }
+.modbox { background: var(--mod-bg); border-radius: 6px; display: flex; flex-direction: column; }
+.modbox > .play { align-self: flex-start; margin-block-start: 8px; margin-inline-start: 10px; }
+.mchunks { border-block: 0; border-top: 1px dashed var(--line); padding: 8px 10px 10px; margin: 0; }
+.mchunks .ck .j { background: var(--card); border-color: var(--mod-fg); color: var(--mod-fg); }
+.play { font: inherit; font-size: .8em; line-height: 1; border: 1px solid var(--line); background: var(--card); color: var(--ai); border-radius: 999px; padding: 4px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+.play[aria-pressed="true"] { background: var(--ai); color: var(--card); border-color: var(--ai); }
+.play svg { width: 10px; height: 10px; }
+.origrow { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.vhint { font-size: .8em; color: var(--shu); margin: 4px 0; line-height: 1.5; }
+.noruby rt { display: none; }
+.nomod .modbox, .novocab .vocab, .novocab .note { display: none; }
+[hidden] { display: none !important; }
+.intro { font-size: .9em; line-height: 1.8; }
+.intro h2 { font-family: var(--jp); font-size: 1.2em; color: var(--ai); margin: 0 0 4px; }
+.intro ol { margin: 6px 0; padding-left: 1.4em; }
+.intro .stg { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.intro .stg li { display: flex; gap: 8px; align-items: baseline; }
+.intro .stg b { color: var(--shu); font-family: var(--jp); flex: none; }
+.intro .stg span { color: var(--muted); }
+.done { text-align: center; padding: 30px 0; line-height: 1.9; }
+/* 直書 */
+.tate main { writing-mode: vertical-rl; overflow-x: auto; overflow-y: hidden; }
+.tate .card { writing-mode: vertical-rl; max-width: none; height: 100%; margin: 0; padding-block: 16px; gap: 16px; }
+.tate .tcy { text-combine-upright: all; }
+.tate .chunks { border-block: 0; border-left: 1px dashed var(--line); border-right: 1px dashed var(--line); padding: 0 10px; }
+.tate .mchunks { border-right: 0; border-top: 0; padding: 10px 8px; }
+.tate .ck svg { transform: rotate(90deg); }
+.tate .ck .z { max-width: none; max-height: 7em; text-align: start; }
+.tate .vocab li { padding-left: 0; padding-top: 1em; text-indent: -1em; }
+.tate .lbl { display: block; inline-size: fit-content; margin: 0 0 0 6px; padding: 6px 2px; letter-spacing: .1em; }
+.tate .note .tag { margin-top: 0; margin-right: .2em; padding: 6px 0; }
+.tate .play { padding: 10px 4px; }
+.tate .intro ol { padding-left: 0; padding-top: 1.4em; }
+footer { background: var(--card); border-top: 1px solid var(--line); padding-block: 8px calc(8px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 8px; }
+footer button { flex: 1; padding: 10px 6px; font-weight: 500; }
+footer .main-btn { background: var(--ai); color: var(--card); border-color: var(--ai); }
+footer .again { color: var(--shu); }
+footer .good { color: var(--ok); }
+.bar { height: 3px; background: var(--line); }
+.bar i { display: block; height: 100%; background: var(--ok); }
+@media (prefers-reduced-motion: no-preference) { .card { animation: in .18s ease-out; } @keyframes in { from { opacity: .4; } to { opacity: 1; } } }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header>
+    <h1>越南旅遊1000句</h1>
+    <div class="pick">
+      <select id="selS" aria-label="階段"></select>
+      <button class="gear" id="gear" aria-expanded="false" aria-controls="settings">設定</button>
+    </div>
+  </header>
+  <div class="tabs">
+    <span class="seg" role="group" aria-label="模式"><button id="mNew">學新句</button><button id="mRev">複習</button><button id="mAll">瀏覽</button></span>
+    <span class="stat" id="stat"></span>
+  </div>
+  <div class="bar"><i id="barI"></i></div>
+  <div class="settings" id="settings" hidden>
+    <div class="row">練習方向<span class="seg"><button id="dZJ">看中→說越</button><button id="dJZ">看越→想中</button></span></div>
+    <div class="row">每天新句<span class="seg"><button id="n10">10</button><button id="n20">20</button><button id="n30">30</button></span></div>
+    <div class="row" hidden>排版<span class="seg"><button id="bTate">直書</button><button id="bYoko">橫書</button></span></div>
+    <div class="row" hidden>振り仮名<span class="seg"><button id="bRubyOn">顯示</button><button id="bRubyOff">隱藏</button></span></div>
+    <div class="row">北部說法<span class="seg"><button id="bModOn">顯示</button><button id="bModOff">隱藏</button></span></div>
+    <div class="row">詞彙・用法<span class="seg"><button id="bVocOn">顯示</button><button id="bVocOff">隱藏</button></span></div>
+    <div class="row">外觀<span class="seg"><button id="bThAuto">自動</button><button id="bThLight">淺色</button><button id="bThDark">深色</button></span></div>
+    <div class="row">朗讀速度<span class="seg"><button id="bR06">慢</button><button id="bR08">中</button><button id="bR10">一般</button></span></div>
+    <div class="row">字體大小<span class="seg"><button id="bFsDn" aria-label="縮小">A−</button><button id="bFsUp" aria-label="放大">A＋</button></span></div>
+    <div class="row">進度備份<span class="seg"><button id="exp">匯出</button><button id="imp">匯入</button><button id="help">說明</button></span></div>
+    <input type="file" id="impFile" accept="application/json,.json" hidden>
+  </div>
+  <main id="main"><article class="card" id="card"><p class="tr">載入中…</p></article></main>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ruby = s => esc(s).replace(/\{([^|}]+)\|([^}]+)\}/g, '<ruby>$1<rt>$2</rt></ruby>');
+const plain = s => s.replace(/\{([^|}]+)\|[^}]+\}/g, '$1').replace(/[「」『』（）()〔〕\[\]]/g, '');
+const ARROW = '<svg viewBox="0 0 9 12" aria-hidden="true"><path d="M4.5 1v9M1.2 7.2 4.5 10.6 7.8 7.2" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>';
+const PLAY = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1 L9 5 L2 9 Z" fill="currentColor"/></svg>朗讀';
+const DAY = 864e5, IV = [0, 1, 3, 7, 16, 35, 90];  // box → 天數
+const RKEY = 'vt1000-display', KEY = 's1000-vt-v1';
+const load = k => { try { return JSON.parse(localStorage.getItem(k) || '{}') || {}; } catch (e) { return {}; } };
+const store = (k, o) => { try { localStorage.setItem(k, JSON.stringify(o)); } catch (e) {} };
+// 顯示設定與逐節閱讀器共用
+const R = Object.assign({ theme: 'auto', tate: true, ruby: true, mod: true, voc: true, fs: 17, rate: 0.8 }, load(RKEY));
+R.tate = false;
+const S = Object.assign({ st: 0, mode: 'new', dir: 'zj', daily: 10, p: {}, day: '', nNew: 0, intro: true, ai: {} }, load(KEY));
+const saveAll = () => { const r = load(RKEY); for (const k of ['theme','tate','ruby','mod','voc','fs','rate']) r[k] = R[k]; store(RKEY, r); store(KEY, S); };
+const today = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
+if (S.day !== today()) { S.day = today(); S.nNew = 0; }
+
+let D = null, ITEMS = [], Q = [], cur = null, shown = false;
+const HOST_THEME = document.documentElement.getAttribute('data-theme');
+function applyTheme() {
+  const r = document.documentElement;
+  if (R.theme === 'light' || R.theme === 'dark') r.setAttribute('data-theme', R.theme);
+  else if (HOST_THEME) r.setAttribute('data-theme', HOST_THEME); else r.removeAttribute('data-theme');
+}
+const byStage = st => ITEMS.filter(e => e.st === st);
+const isDue = e => S.p[e.id] && S.p[e.id].d <= Date.now();
+const known = e => S.p[e.id] && S.p[e.id].b >= 3;
+
+function stageLabel(i) {
+  const L = byStage(i), seen = L.filter(e => S.p[e.id]).length;
+  return `第${i + 1}段 ${D.stages[i].name}（${seen}/${L.length}）`;
+}
+function fillStages() { $('selS').innerHTML = D.stages.map((s, i) => `<option value="${i}">${esc(stageLabel(i))}</option>`).join(''); $('selS').value = S.st; }
+
+function buildQueue() {
+  if (S.mode === 'new') {
+    const left = Math.max(0, S.daily - S.nNew);
+    Q = byStage(S.st).filter(e => !S.p[e.id]).slice(0, left).map(e => e.id);
+  } else if (S.mode === 'rev') {
+    Q = ITEMS.filter(isDue).sort((a, b) => S.p[a.id].d - S.p[b.id].d).map(e => e.id);
+  } else {
+    Q = byStage(S.st).map(e => e.id);
+  }
+  if (S.mode === 'all') { const L = Q; const k = S.ai[S.st] || 0; cur = ITEMS[L[Math.min(k, L.length - 1)] - 1]; }
+  else cur = Q.length ? ITEMS[Q[0] - 1] : null;
+  shown = S.mode === 'all';
+}
+
+function stat() {
+  const seen = Object.keys(S.p).length, k = ITEMS.filter(known).length, due = ITEMS.filter(isDue).length;
+  $('stat').textContent = `已學 ${seen}・熟記 ${k}・待複習 ${due}・今日新句 ${S.nNew}/${S.daily}`;
+  $('barI').style.width = (seen / ITEMS.length * 100) + '%';
+  $('mRev').textContent = due ? `複習 ${due}` : '複習';
+}
+
+function fullHtml(v) {
+  return `
+    <div class="origrow"><button class="play" data-say="o" aria-pressed="false">${PLAY}</button><p class="orig">${ruby(v.c.map(x => x[0]).join(' '))}</p></div>
+    ${v.m ? `<div class="modbox"><button class="play" data-say="m" aria-pressed="false">${PLAY}</button><p class="mod"><span class="lbl">北部說法</span>${ruby(v.m)}</p>${v.mc ? `<div class="chunks mchunks">${v.mc.map(([j, z, h]) => `<div class="ck"><span class="j">${esc(j)}</span>${h ? `<span class="h">${esc(h)}</span>` : ''}${ARROW}<span class="z">${esc(z)}</span></div>`).join('')}</div>` : ''}</div>` : ''}
+    <div class="chunks">${v.c.map(([j, z, h]) => `<div class="ck"><span class="j">${esc(j)}</span>${h ? `<span class="h">${esc(h)}</span>` : ''}${ARROW}<span class="z">${esc(z)}</span></div>`).join('')}</div>
+    <ul class="vocab">${(v.v || []).map(([w, d]) => `<li><span class="w">${esc(w)}</span>…${esc(d)}</li>`).join('')}</ul>
+    ${v.n ? `<div class="note"><span class="tag">用法</span><span>${esc(v.n.replace(/^用法：/, ''))}</span></div>` : ''}
+    ${v.p ? `<div class="note"><span class="tag">南部音</span><span>${esc(v.p.replace(/^南部發音提示：/, ''))}</span></div>` : ''}
+    ${v.h ? `<div class="note"><span class="tag">小提醒</span><span>${esc(v.h)}</span></div>` : ''}`;
+}
+
+function introHtml() {
+  return `<div class="intro">
+    <h2>越南旅遊1000句（胡志明市・南部口音）</h2>
+    <p>背整句，不背單字。這1000句都是到胡志明市旅遊會用到或會聽到的句子，特別加強數字、越南盾價格和購物殺價，依主題分成10段。中文翻譯前標「（聽）」的，是店員、司機會對你說的話，練聽懂就好。越南盾換台幣：去掉三個零再乘1.2左右，例如 100.000đ ≈ 120 元（實際匯率以當天為準）。</p>
+    <ol>
+      <li>每天學 ${S.daily} 句新句（設定裡可改）。</li>
+      <li>先看中文，自己試著說出越南語，再按「顯示答案」對照。</li>
+      <li>按「朗讀」跟著唸，大聲跟讀2〜3次。</li>
+      <li>逐字拆解：每個越南語詞下方的<span style="color:var(--shu)">紅字是漢越詞的漢字</span>，箭頭下是中文意思；用詞和北部不同時，會另外列出北部說法。</li>
+      <li>按照自己記得的程度選「再來」「模糊」「記得」，系統會在 1、3、7、16、35、90 天後排複習。</li>
+      <li>每天先清完「複習」，再學新句。</li>
+    </ol>
+    <ul class="stg">${D.stages.map((s, i) => `<li><b>第${i + 1}段</b>${esc(s.name)}<span>${esc(s.desc)}・${byStage(i).length}句</span></li>`).join('')}</ul>
+  </div>`;
+}
+
+function render() {
+  const app = $('app');
+  app.classList.toggle('tate', R.tate); app.classList.toggle('noruby', !R.ruby);
+  app.classList.toggle('nomod', !R.mod); app.classList.toggle('novocab', !R.voc);
+  document.documentElement.style.setProperty('--fs', R.fs + 'px');
+  const pr = { mNew: S.mode === 'new', mRev: S.mode === 'rev', mAll: S.mode === 'all', dZJ: S.dir === 'zj', dJZ: S.dir === 'jz',
+    n10: S.daily === 10, n20: S.daily === 20, n30: S.daily === 30, bTate: R.tate, bYoko: !R.tate, bRubyOn: R.ruby, bRubyOff: !R.ruby,
+    bModOn: R.mod, bModOff: !R.mod, bVocOn: R.voc, bVocOff: !R.voc, bThAuto: R.theme === 'auto', bThLight: R.theme === 'light', bThDark: R.theme === 'dark',
+    bR06: R.rate === 0.6, bR08: R.rate === 0.8, bR10: R.rate === 1 };
+  for (const k in pr) $(k).setAttribute('aria-pressed', pr[k]);
+  $('selS').disabled = S.mode === 'rev';
+  stat(); fillStages();
+  const card = $('card'), foot = $('foot');
+  const m = $('main'); m.scrollTop = 0; m.scrollLeft = 0;
+  if (S.intro) {
+    card.innerHTML = introHtml();
+    foot.innerHTML = '<button class="main-btn" id="go">開始</button>';
+    $('go').onclick = () => { S.intro = false; saveAll(); render(); };
+    return;
+  }
+  if (!cur) {
+    const msg = S.mode === 'rev' ? '目前沒有到期要複習的句子。' :
+      byStage(S.st).every(e => S.p[e.id]) ? `第${S.st + 1}段的句子都學過了，可以換下一段。` : `今天的 ${S.daily} 句新句已經學完了。先複習，明天再來學新句。`;
+    card.innerHTML = `<div class="done"><p class="tr">${esc(msg)}</p></div>`;
+    const nextSt = S.mode === 'new' && S.st < 9 && byStage(S.st).every(e => S.p[e.id]);
+    foot.innerHTML = nextSt ? '<button class="main-btn" id="nx">進入下一段</button>' : (ITEMS.some(isDue) && S.mode !== 'rev' ? '<button class="main-btn" id="rv">去複習</button>' : '');
+    if (nextSt) $('nx').onclick = () => { S.st++; buildQueue(); saveAll(); render(); };
+    if ($('rv')) $('rv').onclick = () => { S.mode = 'rev'; buildQueue(); saveAll(); render(); };
+    return;
+  }
+  const v = cur;
+  const p = S.p[v.id];
+  const badge = p ? `<span class="badge${p.b >= 3 ? ' ok' : ''}">${p.b >= 3 ? '熟記' : '學習中'}</span>` : '<span class="badge">新句</span>';
+  const head = `<div class="ref"><b>${R.tate ? `<span class="tcy">${v.id}</span>` : v.id}</b><span>第${v.st + 1}段 ${esc(D.stages[v.st].name)}</span>${badge}</div>`;
+  if (!shown) {
+    card.innerHTML = head + (S.dir === 'zj'
+      ? `<p class="tr prompt">${esc(v.t)}</p><p class="hint">用越南語說說看，再看答案。</p>`
+      : `<div class="origrow"><button class="play" data-say="o" aria-pressed="false">${PLAY}</button><p class="orig">${ruby(v.c.map(x => x[0]).join(' '))}</p></div><p class="hint">想想中文意思，再看答案。</p>`);
+    foot.innerHTML = '<button class="main-btn" id="show">顯示答案</button>';
+    $('show').onclick = () => { shown = true; render(); if (S.dir === 'zj') autoSay(); };
+  } else {
+    card.innerHTML = head + `<p class="tr">${esc(v.t)}</p>` + fullHtml(v);
+    if (S.mode === 'all') {
+      const L = Q, k = L.indexOf(v.id);
+      foot.innerHTML = `<button id="pv"${k <= 0 ? ' disabled' : ''}>‹ 上一句</button><button id="nv"${k >= L.length - 1 ? ' disabled' : ''}>下一句 ›</button>`;
+      if (R.tate) foot.style.flexDirection = 'row-reverse'; else foot.style.flexDirection = '';
+      $('pv').onclick = () => browse(-1); $('nv').onclick = () => browse(1);
+    } else {
+      foot.style.flexDirection = '';
+      foot.innerHTML = '<button class="again" id="r0">再來</button><button id="r1">模糊</button><button class="good" id="r2">記得</button>';
+      $('r0').onclick = () => rate(0); $('r1').onclick = () => rate(1); $('r2').onclick = () => rate(2);
+    }
+  }
+}
+
+function browse(d) {
+  const L = Q, k = L.indexOf(cur.id) + d;
+  if (k < 0 || k >= L.length) return;
+  S.ai[S.st] = k; cur = ITEMS[L[k] - 1]; stopSay(); saveAll(); render();
+}
+
+function rate(g) {
+  stopSay();
+  const id = cur.id, wasNew = !S.p[id], p = S.p[id] || { b: 0, d: 0, n: 0 };
+  p.n++;
+  if (g === 0) { p.b = 0; p.d = Date.now(); }
+  else if (g === 1) { p.b = Math.max(1, p.b); p.d = Date.now() + IV[p.b] * DAY; }
+  else { p.b = Math.min(IV.length - 1, p.b + 1); p.d = Date.now() + IV[p.b] * DAY; }
+  S.p[id] = p;
+  if (wasNew && S.mode === 'new') S.nNew++;
+  Q.shift();
+  if (g === 0) Q.splice(Math.min(3, Q.length), 0, id);   // 「再來」：幾句後再出現一次
+  cur = Q.length ? ITEMS[Q[0] - 1] : null; shown = false;
+  saveAll(); render();
+}
+
+// 朗讀
+let jaVoice = null;
+function pickVoice() { try { const vs = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang)); jaVoice = vs.find(v => /HoaiMy|NamMinh|Google|Linh|An/i.test(v.name)) || vs[0] || null; } catch (e) {} }
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function stopSay() { try { speechSynthesis.cancel(); } catch (e) {} }
+function say(kind, btn) {
+  if (!('speechSynthesis' in window)) { btn.textContent = '此瀏覽器不支援朗讀'; return; }
+  const was = btn.getAttribute('aria-pressed') === 'true';
+  stopSay(); document.querySelectorAll('.play').forEach(b => b.setAttribute('aria-pressed', 'false'));
+  if (was) return;
+  const text = plain(kind === 'm' ? cur.m.replace(/^北部[：:]\s*/, '') : cur.c.map(x => x[0]).join(' '));
+  if (!jaVoice) pickVoice();
+  if (!jaVoice && speechSynthesis.getVoices().length) {
+    let h = $('vhint'); if (!h) { h = document.createElement('p'); h.id = 'vhint'; h.className = 'vhint'; }
+    h.textContent = '這台裝置沒有越南語語音。Windows：設定 → 時間與語言 → 語音 → 新增語音 → Tiếng Việt，裝好後重開瀏覽器。手機請在系統的「文字轉語音」下載越南語語音。';
+    btn.insertAdjacentElement('afterend', h); return;
+  }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'vi-VN'; if (jaVoice) u.voice = jaVoice; u.rate = R.rate || 0.8;
+  u.onend = u.onerror = () => btn.setAttribute('aria-pressed', 'false');
+  btn.setAttribute('aria-pressed', 'true'); speechSynthesis.speak(u);
+}
+function autoSay() { const b = document.querySelector('.origrow .play'); if (b) say('o', b); }
+document.addEventListener('click', e => { const b = e.target.closest('.play'); if (b) say(b.dataset.say, b); });
+
+// 控制項
+$('gear').onclick = () => { const s = $('settings'); s.hidden = !s.hidden; $('gear').setAttribute('aria-expanded', !s.hidden); };
+$('selS').onchange = e => { S.st = +e.target.value; if (S.mode === 'rev') S.mode = 'new'; buildQueue(); saveAll(); render(); };
+const mode = m => () => { S.mode = m; stopSay(); buildQueue(); saveAll(); render(); };
+$('mNew').onclick = mode('new'); $('mRev').onclick = mode('rev'); $('mAll').onclick = mode('all');
+const setS = (k, v, rq) => () => { S[k] = v; if (rq) buildQueue(); else if (k === 'dir' && S.mode !== 'all') shown = false; saveAll(); render(); };
+$('dZJ').onclick = setS('dir', 'zj'); $('dJZ').onclick = setS('dir', 'jz');
+for (const n of [10, 20, 30]) $('n' + n).onclick = setS('daily', n, true);
+const setR = (k, v) => () => { R[k] = v; if (k === 'theme') applyTheme(); saveAll(); render(); };
+$('bTate').onclick = setR('tate', true); $('bYoko').onclick = setR('tate', false);
+$('bRubyOn').onclick = setR('ruby', true); $('bRubyOff').onclick = setR('ruby', false);
+$('bModOn').onclick = setR('mod', true); $('bModOff').onclick = setR('mod', false);
+$('bVocOn').onclick = setR('voc', true); $('bVocOff').onclick = setR('voc', false);
+$('bThAuto').onclick = setR('theme', 'auto'); $('bThLight').onclick = setR('theme', 'light'); $('bThDark').onclick = setR('theme', 'dark');
+$('bR06').onclick = setR('rate', 0.6); $('bR08').onclick = setR('rate', 0.8); $('bR10').onclick = setR('rate', 1);
+$('bFsDn').onclick = () => { R.fs = Math.max(13, R.fs - 1); saveAll(); render(); };
+$('bFsUp').onclick = () => { R.fs = Math.min(26, R.fs + 1); saveAll(); render(); };
+$('help').onclick = () => { S.intro = true; saveAll(); render(); };
+$('exp').onclick = () => {
+  const blob = new Blob([JSON.stringify({ s1000: S.p, saved: new Date().toISOString() })], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '越南旅遊1000句進度_' + today() + '.json';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+};
+$('imp').onclick = () => $('impFile').click();
+$('impFile').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try { const o = JSON.parse(await f.text()); if (o && o.s1000) { S.p = o.s1000; buildQueue(); saveAll(); render(); $('imp').textContent = '已匯入'; } else $('imp').textContent = '格式不符'; }
+  catch (err) { $('imp').textContent = '讀取失敗'; }
+  e.target.value = '';
+};
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+  if (e.key === ' ' || e.key === 'Enter') { const b = $('show') || $('go'); if (b) { e.preventDefault(); b.click(); } }
+  if (shown && S.mode !== 'all' && cur) { if (e.key === '1') rate(0); if (e.key === '2') rate(1); if (e.key === '3') rate(2); }
+  if (S.mode === 'all' && cur) { if (e.key === 'ArrowRight') browse(R.tate ? -1 : 1); if (e.key === 'ArrowLeft') browse(R.tate ? 1 : -1); }
+});
+
+applyTheme();
+fetch('s1000.json').then(r => { if (!r.ok) throw 0; return r.json(); }).then(d => {
+  D = d; ITEMS = d.items; S.st = Math.min(Math.max(0, S.st | 0), d.stages.length - 1);
+  buildQueue(); render();
+}).catch(() => { $('card').innerHTML = '<p class="tr">資料載入失敗。請確認有網路後重新打開。</p>'; });
+</script>
+<script>if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}</script>
+</body></html>
