@@ -314,28 +314,13 @@ let jaVoice = null;
 function pickVoice() { try { const vs = speechSynthesis.getVoices().filter(v => /^vi/i.test(v.lang)); jaVoice = vs.find(v => /HoaiMy|NamMinh|Google|Linh|An/i.test(v.name)) || vs[0] || null; } catch (e) {} }
 if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 
-// ---- 預錄自然語音（audio.bin + audio.json）；沒有時改用裝置語音 ----
-const fnv = s => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(16).padStart(8, '0'); };
-let AIDX = null, ABIN = null, curAudio = null; const AURL = {};
-fetch('audio.json').then(r => r.ok ? r.json() : null).then(j => { AIDX = j; }).catch(() => {});
-async function clipFor(t) {
-  if (!AIDX) return null; const k = fnv(t), e = AIDX[k]; if (!e) return null;
-  if (AURL[k]) return AURL[k];
-  try { if (!ABIN) ABIN = fetch('audio.bin').then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); }); const buf = await ABIN;
-    return AURL[k] = URL.createObjectURL(new Blob([buf.slice(e[0], e[0] + e[1])], { type: 'audio/mpeg' })); }
-  catch (err) { ABIN = null; return null; }
-}
-function playClip(url, rate) { return new Promise(res => { const a = new Audio(url); a.playbackRate = rate; a.preservesPitch = true; curAudio = a; a.onended = a.onerror = () => res(true); a.play().catch(() => res(false)); }); }
-function stopClip() { if (curAudio) { try { curAudio.pause(); } catch (e) {} curAudio = null; } }
-function stopSay() { try { speechSynthesis.cancel(); } catch (e) {} stopClip(); }
-async function say(kind, btn) {
+function stopSay() { try { speechSynthesis.cancel(); } catch (e) {} }
+function say(kind, btn) {
+  if (!('speechSynthesis' in window)) { btn.textContent = '此瀏覽器不支援朗讀'; return; }
   const was = btn.getAttribute('aria-pressed') === 'true';
   stopSay(); document.querySelectorAll('.play').forEach(b => b.setAttribute('aria-pressed', 'false'));
   if (was) return;
   const text = plain(kind === 'm' ? cur.m.replace(/^北部[：:]\s*/, '') : cur.c.map(x => x[0]).join(' '));
-  const url = await clipFor(text);
-  if (url) { btn.setAttribute('aria-pressed', 'true'); await playClip(url, R.rate || 0.8); btn.setAttribute('aria-pressed', 'false'); return; }
-  if (!('speechSynthesis' in window)) { btn.textContent = '此瀏覽器不支援朗讀'; return; }
   if (!jaVoice) pickVoice();
   if (!jaVoice && speechSynthesis.getVoices().length) {
     let h = $('vhint'); if (!h) { h = document.createElement('p'); h.id = 'vhint'; h.className = 'vhint'; }
